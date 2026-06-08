@@ -25,43 +25,68 @@ export default function Page() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#050811] text-slate-300 font-mono p-4 md:p-8 block overflow-y-visible">
-      <div className="max-w-5xl mx-auto w-full flex flex-col gap-10 pb-32">
+    <div className="w-full min-h-screen bg-[#050811] text-slate-300 font-mono flex overflow-y-auto">
+      
+      {/* ======================================================== */}
+      {/* 📐 LEFT SIDEBAR: 30% SPLIT VIEW CONSOLE MODULE           */}
+      {/* ======================================================== */}
+      <aside className="w-[30%] min-w-[320px] max-w-[400px] border-r border-slate-900 bg-[#070b18] p-6 flex flex-col gap-6 h-screen sticky top-0 overflow-y-auto">
         
         {/* PLATFORM HEADER */}
-        <header className="flex items-center justify-between border-b border-slate-900 pb-6">
-          <div>
-            <div className="text-[10px] text-blue-500 font-bold tracking-widest uppercase">// SYSTEM MAIN ENGINE</div>
-            <h1 className="text-2xl font-black tracking-wider text-white uppercase mt-1">App Store Ranking Tracker</h1>
+        <div>
+          <div className="text-[10px] text-blue-500 font-bold tracking-widest uppercase">// SYSTEM MAIN ENGINE</div>
+          <h1 className="text-lg font-black tracking-wider text-white uppercase mt-1">App Store Tracker</h1>
+          
+          <div className="text-[10px] font-bold bg-slate-900/60 border border-slate-900 px-3 py-1.5 rounded-md text-emerald-400 flex items-center gap-2 mt-4 w-full justify-between">
+            STATUS: ACTIVE <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           </div>
-          <div className="text-xs font-bold bg-slate-900/40 border border-slate-900 px-4 py-2 rounded-md text-emerald-400 flex items-center gap-2">
-            RUNNING STATUS: ACTIVE <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          </div>
-        </header>
+        </div>
 
-        {/* FEATURE: CATEGORY FILTERS */}
-        <section className="w-full bg-[#090d1a]/60 border border-slate-900 rounded-lg p-6 shadow-xl">
-          <div className="text-[11px] text-blue-500 font-bold tracking-widest uppercase mb-4">// ENGINE FILTERS // MCC CATEGORIES</div>
-          <div className="flex flex-wrap gap-2">
+        {/* INSIGHT CONTROL PANEL: CATEGORY FILTERS */}
+        <div className="w-full bg-[#090d1a]/60 border border-slate-900 rounded-lg p-4 shadow-xl">
+          <div className="text-[10px] text-blue-500 font-bold tracking-widest uppercase mb-3">// CATEGORY FILTERS</div>
+          <div className="flex flex-col gap-1.5">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2.5 text-xs font-bold tracking-widest rounded border transition-all duration-150 cursor-pointer ${
+                className={`w-full text-left px-4 py-2 text-xs font-bold tracking-widest rounded border transition-all duration-150 cursor-pointer ${
                   activeCategory === cat
-                    ? 'bg-blue-950/40 text-blue-400 border-blue-500 shadow-md shadow-blue-500/10'
-                    : 'bg-[#0b1122] text-slate-500 border-slate-900 hover:text-slate-300 hover:border-slate-800'
+                    ? 'bg-blue-950/40 text-blue-400 border-blue-500'
+                    : 'bg-[#0b1122] text-slate-500 border-slate-900 hover:text-slate-300'
                 }`}
               >
-                {cat}
+                {cat === "ALL" ? "▫️ SHOW ALL NODES" : `▪️ ${cat}`}
               </button>
             ))}
           </div>
-        </section>
+        </div>
 
+        {/* INSIGHT TILE: SELECTED APP ANALYSIS ACCELERATION */}
+        <div className="w-full bg-[#090d1a]/60 border border-slate-900 rounded-lg p-4 shadow-xl">
+          <div className="text-[10px] text-blue-500 font-bold tracking-widest uppercase mb-3">// INSTANT CORE METRIC</div>
+          <div className="p-3 bg-[#050811] border border-slate-900 rounded space-y-2">
+            <div className="text-[10px] text-slate-500 uppercase">Review Velocity Rate:</div>
+            <div className="text-sm font-black text-blue-400 tracking-wider">
+              {appDatabase.find(a => a.name === primaryApp)?.velocity}
+            </div>
+            <div className="text-[9px] text-slate-600 font-sans">Calculated for {primaryApp}.</div>
+          </div>
+        </div>
+
+        <div className="text-center text-[9px] text-slate-700 uppercase mt-auto">
+          // 30% SIDEBAR BLOCK ENDS //
+        </div>
+      </aside>
+
+      {/* ======================================================== */}
+      {/* 📐 MAIN CORE INTEL: 70% PANEL VIEW EXTENSION SPACE       */}
+      {/* ======================================================== */}
+      <main className="w-[70%] flex-1 p-6 md:p-8 flex flex-col gap-8 overflow-y-visible pb-32">
+        
         {/* APPLICATION MAIN METRICS NODE TABLE */}
         <section className="w-full bg-[#090d1a]/60 border border-slate-900 rounded-lg p-6 shadow-xl">
-          <div className="text-[11px] text-blue-500 font-bold tracking-widest uppercase mb-4">// TRACKER LOG OUTCOMES</div>
+          <div className="text-[11px] text-blue-500 font-bold tracking-widest uppercase mb-4">// INTEL OUTPUT DATALINK MATRIX (70%)</div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs tracking-wider">
               <thead>
@@ -99,7 +124,7 @@ export default function Page() {
               <select 
                 value={primaryApp} 
                 onChange={(e) => setPrimaryApp(e.target.value)}
-                className="w-full bg-[#050811] border border-slate-900 rounded p-3 text-xs text-white font-bold outline-none"
+                className="w-full bg-[#050811] border border-slate-900 rounded p-3 text-xs text-white font-bold outline-none cursor-pointer"
               >
                 {appDatabase.map((app) => <option key={app.name} value={app.name}>{app.name}</option>)}
               </select>
@@ -109,7 +134,7 @@ export default function Page() {
               <select 
                 value={comparisonApp} 
                 onChange={(e) => setComparisonApp(e.target.value)}
-                className="w-full bg-[#050811] border border-slate-900 rounded p-3 text-xs text-blue-400 font-bold outline-none"
+                className="w-full bg-[#050811] border border-slate-900 rounded p-3 text-xs text-blue-400 font-bold outline-none cursor-pointer"
               >
                 {appDatabase.map((app) => <option key={app.name} value={app.name}>{app.name}</option>)}
               </select>
@@ -126,25 +151,6 @@ export default function Page() {
               <div className="text-slate-500">COMPARATIVE TARGET SPECS:</div>
               <div className="text-blue-400 font-sans">{comparisonApp} (Score: {appDatabase.find(a => a.name === comparisonApp)?.score})</div>
               <div className="text-slate-400 text-[11px]">Vol Weight: {appDatabase.find(a => a.name === comparisonApp)?.share}</div>
-            </div>
-          </div>
-        </section>
-
-        {/* VISUAL SEPARATOR SPLIT */}
-        <div className="w-full text-center py-4 border-y border-slate-900 bg-slate-950/40 text-xs text-slate-500 tracking-widest font-black">
-          ↓↓ MOUSE SCROLL DOWN FOR VELOCITY STRATIFICATION & 30-DAY RANK CHARTS ↓↓
-        </div>
-
-        {/* FEATURE: REVIEW VELOCITY MODULE */}
-        <section className="w-full bg-[#090d1a]/60 border border-slate-900 rounded-lg p-6 shadow-xl">
-          <div className="text-[11px] text-blue-500 font-bold tracking-widest uppercase mb-4">// REQUIRED FEATURE: REVIEW VELOCITY ENGINE</div>
-          <div className="p-6 bg-[#050811] border border-slate-900 rounded flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-bold text-white uppercase font-sans">Ingestion Rate Acceleration</h3>
-              <p className="text-xs text-slate-500 mt-1">Rolling weekly calculation matrix for {primaryApp}.</p>
-            </div>
-            <div className="bg-[#090d1a] border border-slate-900 px-6 py-3 rounded text-base font-black text-blue-400 tracking-wider">
-              {appDatabase.find(a => a.name === primaryApp)?.velocity}
             </div>
           </div>
         </section>
@@ -189,10 +195,10 @@ export default function Page() {
         </section>
 
         <footer className="text-center text-[10px] text-slate-700 uppercase tracking-widest pt-4">
-          // STREAM ENDS // MOUSE WHEEL CONTROL STABLE //
+          // STREAM ENDS // WORKSPACE RENDERING COMPLETED //
         </footer>
+      </main>
 
-      </div>
     </div>
   );
 }
